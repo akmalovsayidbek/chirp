@@ -4,10 +4,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { APP_ORIGIN, NODE_ENV, PORT } from "./constants/env.js";
 import errorHandler from "./middleware/errorHandler.js";
-import { OK } from "./constants/http.js";
 import authRoutes from "./routes/authRoutes.js";
 import authenticate from "./middleware/authenticate.js";
-import userRoutes from "./routes/userRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 const app = express();
 
@@ -17,7 +16,7 @@ app.use(cookieParser());
 app.use(cors({ origin: APP_ORIGIN, credentials: true }));
 
 app.use("/auth", authRoutes);
-app.use("/user", authenticate, userRoutes);
+app.use("/profile", authenticate, profileRoutes);
 
 app.use(errorHandler);
 
