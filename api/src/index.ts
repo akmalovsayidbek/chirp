@@ -7,6 +7,10 @@ import errorHandler from "./middleware/errorHandler.js";
 import authRoutes from "./routes/authRoutes.js";
 import authenticate from "./middleware/authenticate.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
+import followRoutes from "./routes/followRoute.js";
+import likeRoutes from "./routes/likeRoute.js";
+import bookmarkRoutes from "./routes/bookmarkRoute.js";
 
 const app = express();
 
@@ -17,6 +21,10 @@ app.use(cors({ origin: APP_ORIGIN, credentials: true }));
 
 app.use("/auth", authRoutes);
 app.use("/profile", authenticate, profileRoutes);
+app.use("/post", authenticate, postRoutes);
+app.use("/follow", authenticate, followRoutes);
+app.use("/like", authenticate, likeRoutes);
+app.use("/bookmark", authenticate, bookmarkRoutes);
 
 app.use(errorHandler);
 

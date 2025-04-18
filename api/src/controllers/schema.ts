@@ -45,3 +45,14 @@ export const loginSchema = z.object({
   password: stringSchema,
   userAgent: userAgentSchema,
 });
+
+export const contentSchema = z
+  .string()
+  .min(1, { message: "Content is required." })
+  .max(300, { message: "Content must be shorter than 300 characters." })
+  .transform((input) => {
+    input = input.trim();
+    input = input.replace(/[ \t]+/g, " ");
+    input = input.replace(/\n{3,}/g, "\n\n");
+    return input;
+  });

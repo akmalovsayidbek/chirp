@@ -18,7 +18,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sessions Session[] @relation("Sessions")
+  sessions  Session[]  @relation("Sessions")
+  posts     Post[]
+  following Follow[]   @relation("Following")
+  followers Follow[]   @relation("Followers")
+  likes     Like[]
+  bookmarks Bookmark[]
 }
 
 model Session {
@@ -29,4 +34,48 @@ model Session {
   createdAt DateTime @default(now())
 
   user User @relation("Sessions", fields: [userId], references: [id])
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  content   String
+  userId    String
+  createdAt DateTime @default(now())
+
+  user      User       @relation(fields: [userId], references: [id])
+  likes     Like[]
+  bookmarks Bookmark[]
+}
+
+model Follow {
+  id          String @id @default(uuid())
+  followerId  String
+  followingId String
+
+  follower  User @relation("Following", fields: [followerId], references: [id])
+  following User @relation("Followers", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model Like {
+  id     String @id @default(uuid())
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
+}
+
+model Bookmark {
+  id     String @id @default(uuid())
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
 }
