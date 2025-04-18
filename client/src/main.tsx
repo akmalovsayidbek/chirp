@@ -13,7 +13,7 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/SignUp.tsx";
 import Home from "./pages/Home.tsx";
 import { HeroUIProvider } from "@heroui/react";
-import AppContainer from "./components/AppContainer.tsx";
+import AppContainer from "./components/layout/AppContainer.tsx";
 import { Toaster } from "react-hot-toast";
 import queryClient from "./config/queryClient.ts";
 import { ThemeProvider } from "next-themes";
@@ -36,7 +36,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <HeroUIProvider>
-        <ThemeProvider attribute="class" defaultTheme="dark">
+        <ThemeProvider attribute="class" defaultTheme="light">
           <RouterProvider router={router} />
           <Toaster />
         </ThemeProvider>
